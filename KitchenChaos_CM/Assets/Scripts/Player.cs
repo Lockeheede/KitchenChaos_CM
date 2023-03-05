@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //Start of Singleton Pattern
+    public static Player Instance { get; private set; }
+
     public event EventHandler OnSelectedCounterChanged;
     public class OnSelectedCounterChangeEventArgs : EventArgs {
         public ClearCounter selectedCounter;
@@ -23,6 +26,13 @@ public class Player : MonoBehaviour
 
     //Starting from scratch, erase all the logic first
 
+    private void Awake() {
+        if (Instance != null)
+        {
+            Debug.Log("There is more than one player Instance!");
+        }
+        Instance = this;
+    }
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;  
