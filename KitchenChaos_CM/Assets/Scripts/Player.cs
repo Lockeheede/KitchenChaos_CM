@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     //Start of Singleton Pattern
     public static Player Instance { get; private set; }
 
-    public event EventHandler OnSelectedCounterChanged;
-    public class OnSelectedCounterChangeEventArgs : EventArgs {
+    public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs {
         public ClearCounter selectedCounter;
     }
     //A bool that interacts with the PlayerAnimator script
@@ -132,19 +132,19 @@ public class Player : MonoBehaviour
                     SetSelectedCounter(null);
                 }
             }
+
+        } 
             else
             {
                 SetSelectedCounter(null);
             }
-
-        } 
     }
 
     private void SetSelectedCounter(ClearCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
 
-        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangeEventArgs { 
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs { 
             selectedCounter = selectedCounter
         });
     }
